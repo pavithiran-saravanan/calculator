@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root{
+    --background : rgb(35, 105, 138);
+    --container : rgb(14, 43, 56);
+    --display : none;
+    --num : rgb(22, 65, 85);
+    --num-hover: rgb(25, 72, 94);
+    --op : rgb(18, 54, 71);
+    --op-hover : rgb(21, 62, 82);
+    --eq : rgb(52, 151, 197);
+    --eq-hover : rgb(59, 171, 223);
+}
+
+body{
+    height: 100vh;
+    background-color: var(--background);
+    display: flex;
+}
+
+.container{
+    width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: var(--container);
+    color: white;
+    padding: 8px;
+    gap: 5px;
+    user-select: none;
+}
+
+.display{
+    display: flex;
+    padding-right: 20px;
+    height: 140px;
+    justify-content: end;
+    font-size: 80px;
+    font-weight: 400;
+    align-items: center;
+    border-radius: 8px;
+    background-color: var(--display);
+}
+
+.buttons-container{
+    display: flex;
+    flex-direction: column;    
+    gap: 4px;
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.tab{
+    font-size: 18px;
+    font-weight: 500;
+    padding-left: 10px;
+    padding-top: 4px;
+}
+
+.row{
+    display: flex;
+    gap: 4px;
+}
+
+.btn{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    height: 90px;
+    background-color: var(--num);
+}
+
+.btn:hover{
+    background-color: var(--num-hover);
+}
+
+.op, .others{
+    background-color: var(--op);
+    font-size: 28px;
+}
+
+.op:hover, others:hover{
+    background-color: var(--op-hover);
+}
+
+.clear{
+    background-color: rgb(192, 69, 100);
+}
+.clear:hover{
+    background-color: rgb(211, 75, 109);
+}
+
+.eq{
+    background-color: var(--eq);
+}
+
+.eq:hover{
+    background-color: var(--eq-hover);
+}
+
+#backspace-icon, #clear-icon{
+    font-size: 35px;
+}
+
+
