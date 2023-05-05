@@ -20,19 +20,25 @@ body{
     height: 100vh;
     background-color: var(--background);
     display: flex;
+    background-image: url(./test.jpg);
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .container{
-    width: 500px;
+    width: 400px;
     margin: auto;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    background-color: var(--container);
+    /* background-color: var(--container); */
+    background-color: rgb(0, 0, 0, 70%);
     color: white;
     padding: 8px;
     gap: 5px;
     user-select: none;
+    backdrop-filter: blur(50px);
 }
 
 .display{
@@ -73,40 +79,46 @@ body{
     justify-content: center;
     align-items: center;
     border-radius: 6px;
-    height: 90px;
-    background-color: var(--num);
+    height: 70px;
+    /* background-color: var(--num); */
+    background-color: rgba(255, 255, 255, 10%);
 }
 
 .btn:hover{
-    background-color: var(--num-hover);
+    /* background-color: var(--num-hover); */
+    background-color: rgba(255, 255, 255, 7%);
 }
 
 .op, .others{
-    background-color: var(--op);
-    font-size: 28px;
+    /* background-color: var(--op); */
+    background-color: rgba(255, 255, 255, 7%);
+    font-size: 24px;
 }
 
-.op:hover, others:hover{
-    background-color: var(--op-hover);
+.op:hover, .others:hover{
+    /* background-color: var(--op-hover); */
+    background-color: rgba(255, 255, 255, 4%);
 }
 
-.clear{
+/* .clear{
     background-color: rgb(192, 69, 100);
 }
 .clear:hover{
     background-color: rgb(211, 75, 109);
-}
+} */
 
 .eq{
-    background-color: var(--eq);
+    /* background-color: var(--eq); */
+    background-color: rgb(47, 102, 185);
 }
 
 .eq:hover{
-    background-color: var(--eq-hover);
+    /* background-color: var(--eq-hover); */
+    background-color: rgb(54, 115, 207);
 }
 
 #backspace-icon, #clear-icon{
-    font-size: 35px;
+    font-size: 32px;
 }
 
 
