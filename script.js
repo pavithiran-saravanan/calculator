@@ -1,3 +1,4 @@
+// Required Variables
 let num1 = "", operator = "", num2 = "";
 let displayValue = '0';
 const display = document.querySelector('.display');
@@ -33,6 +34,13 @@ function operate(num1, operator, num2){
 }
 
 function populateDisplay(){
+    // if(num1 && !operator && !num2 && displayValue.length > 16 && displayValue.includes('.')){
+    //     displayValue = strip(displayValue);
+    // }
+    if(displayValue.length > 14) display.style.fontSize = '30px';
+    else if(displayValue.length > 9) display.style.fontSize = '40px';
+    else if(displayValue.length <= 9) display.style.fontSize = '60px';
+
     if(!num1) display.textContent = "0";
     else display.textContent = displayValue;
 };
@@ -75,10 +83,8 @@ clear.addEventListener('click', clearHandler);
 
 // Strip Num
 function strip(number){
-    return parseFloat(number).toPrecision(15);
+    return parseFloat(number).toPrecision(10);
 }
-
-
 
 // Back Button Handler
 function backHandler(e){
@@ -151,7 +157,6 @@ function dotHandler(e){
 // Equal Button Handler
 function equalHandler(e){
     if(!isDecimalPresentAtLast() && num1 && operator && num2){
-        // num1 = "" + strip(operate(num1, operator, num2));
         num1 = "" + operate(num1, operator, num2);
         operator = "";
         num2 = "";
@@ -182,7 +187,6 @@ function operatorHandler(e){
             num1 = "" + operate(num1, operator, num2);
             if(num1 == "LMAO") {
                 operations = [];
-                // num1 = num2 = operator = "";
                 displayValue = num1;
                 populateDisplay();
                 return;
@@ -191,11 +195,9 @@ function operatorHandler(e){
             num2 = "";
             displayValue = num1 + displayOperator(operator);
             
-            // Resetting operations stack
             operations = [];
             for(let i = 0; i < num1.length; i++) operations.push("num1");
             operations.push("operator");
-
             populateDisplay();
         }
     }
@@ -203,10 +205,9 @@ function operatorHandler(e){
 
 // Clear Button Handler
 function clearHandler(e){
-    // Reset our variables
     num1 = num2 = operator = "";
     operations = [];
-    // Update display after variable refres
+    displayValue = '0';
     populateDisplay();
 }
 
@@ -229,15 +230,11 @@ function numberHandler(e){
         num2 = num2 + e.target.getAttribute('id');
         operations.push("num2");
     }
-    // Update displayValue
     displayValue = num1 + displayOperator(operator) + num2;
-
-    // Populate display
     populateDisplay(); 
 }
 
 window.addEventListener('keydown', (e) => {
-    console.log(e);
     const pressed = e.key;
     if(pressed == '0' || (+pressed >= 1 && +pressed <= 9)){
         document.getElementById(`${pressed}`).click();
@@ -258,19 +255,3 @@ window.addEventListener('keydown', (e) => {
         document.getElementById('equal').click();
     }
 })
-
-// For Debugging
-// window.addEventListener('click', (e)=>{
-//     console.log(num1, operator, num2, operations);
-// })
-
-// code = Digit1  key = 1
-// code = Period  key = .
-// key = *
-// key = /
-// key = =
-// key = +
-// key = -
-// key = Delete
-// key = Enter
-// key = Backspace
