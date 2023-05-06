@@ -1,5 +1,5 @@
 // Required Variables
-let num1 = "", operator = "", num2 = "";
+let num1 = '0', operator = '', num2 = '';
 let displayValue = '0';
 const display = document.querySelector('.display');
 let operations = [];
@@ -34,15 +34,12 @@ function operate(num1, operator, num2){
 }
 
 function populateDisplay(){
-    // if(num1 && !operator && !num2 && displayValue.length > 16 && displayValue.includes('.')){
-    //     displayValue = strip(displayValue);
-    // }
     if(displayValue.length > 14) display.style.fontSize = '30px';
     else if(displayValue.length > 9) display.style.fontSize = '40px';
     else if(displayValue.length <= 9) display.style.fontSize = '60px';
 
-    if(!num1) display.textContent = "0";
-    else display.textContent = displayValue;
+    if(num1 == '') display.textContent = '0';
+    display.textContent = displayValue;
 };
 
 // Changes * to x and / to ÷ when outputting to display
@@ -88,17 +85,23 @@ function strip(number){
 
 // Back Button Handler
 function backHandler(e){
-    if(num1 == "LMAO"){
-        num1 = num2 = operator = "";
-        displayValue = 0;
-        populateDisplay();
-        return;
-    }
-    if(operations.len == 0){
-        num1 = num2 = operator = "";
-        return;
-    }
     let lastOperation = operations[operations.length - 1];
+
+    if(num1 == "LMAO"){
+        num1 = '0'; num2 = operator = "";
+        displayValue = num1 + displayOperator(operator) + num2;
+        populateDisplay();
+        operations = [];
+        return;
+    }
+
+    if(operations.length == 1){
+        num1 ='0'; num2 = operator = "";
+        displayValue = num1 + displayOperator(operator) + num2; populateDisplay();
+        operations = [];
+        return;
+    }
+
     if(lastOperation == 'equal'){
         operations = [];
         operator = num2 = '';
@@ -119,7 +122,7 @@ function backHandler(e){
     }
     operations.pop();
     if(operations.leng == 0){
-        num1 = num2 = operator = "";
+        num1 = '0'; num2 = operator = "";
     }
     displayValue = num1 + displayOperator(operator) + num2
     populateDisplay();
@@ -129,11 +132,17 @@ function backHandler(e){
 function dotHandler(e){
     if(num1 == "LMAO") {
         operations = [];
-        num1 = num2 = operator = "";
+        num1 = '0';
+        num2 = operator = "";
+        displayValue = num1 + displayOperator(operator) + num2;
         populateDisplay();
     }
-    if(!num1){
+    if(num1 == '0'){
         num1 = "0.";
+        operations.push('num1');
+    }
+    else if(num1 == '-'){
+        num1 = '-0.';
         operations.push('num1');
     }
     else if(!operator){
@@ -143,12 +152,11 @@ function dotHandler(e){
     else if(!num2){
         num2 = "0.";
         operations.push('num2');
+        operations.push('num2');
     }
-    else{
-        if(!num2.includes(".")) {
-            num2 = num2 + ".";
-            operations.push('num2');
-        }
+    else if(!num2.includes(".")) {
+        num2 = num2 + ".";
+        operations.push('num2');
     }
     displayValue = num1 + displayOperator(operator) + num2;
     populateDisplay();
@@ -160,7 +168,7 @@ function equalHandler(e){
         num1 = "" + operate(num1, operator, num2);
         operator = "";
         num2 = "";
-        displayValue = num1;
+        displayValue = num1 + displayOperator(operator) + num2;
         populateDisplay();
         operations.push('equal');
     }
@@ -168,16 +176,26 @@ function equalHandler(e){
 
 // Operator Button Handler
 function operatorHandler(e){
+    const operatorPressed = e.target.getAttribute('id');
     if(isDecimalPresentAtLast()) return;
-    if(num1 == "LMAO") {
-        operations = [];
-        num1 = num2 = operator = "";
-        populateDisplay();
+    // if(num1 == "LMAO") {
+    //     console.log('MY LMAO');
+    //     operations = [];
+    //     num1 = '0';
+    //     num2 = operator = "";
+    //     displayValue = num1 + displayOperator(operator) + num2;
+    //     populateDisplay();
+    //     return;
+    // }
+    if(num1 == '0' && operatorPressed == '-'){
+        num1 = operatorPressed;
+        displayValue = num1 + displayOperator(operator) + num2; populateDisplay();
+        operations.push('num1');
     }
-    if(num1){
-        // When operator is pressed after num1 is populated
+    else if(num1 != '0' && num1 != '' && num1 != '-'){
+        // Operator pressed after num1 but num2 is empty
         if(!num2){
-            operator = e.target.getAttribute('id');
+            operator = operatorPressed;
             displayValue = num1+displayOperator(operator)+num2;
             populateDisplay();
             operations.push("operator");
@@ -187,47 +205,52 @@ function operatorHandler(e){
             num1 = "" + operate(num1, operator, num2);
             if(num1 == "LMAO") {
                 operations = [];
-                displayValue = num1;
+                operator = num2 = '';
+                displayValue = num1 + displayOperator(operator) + num2;
                 populateDisplay();
                 return;
             }
-            operator = e.target.getAttribute('id');
+            operator = operatorPressed;
             num2 = "";
-            displayValue = num1 + displayOperator(operator);
-            
             operations = [];
             for(let i = 0; i < num1.length; i++) operations.push("num1");
             operations.push("operator");
-            populateDisplay();
+            displayValue = num1 + displayOperator(operator) + num2; populateDisplay();
         }
     }
 }
 
 // Clear Button Handler
 function clearHandler(e){
-    num1 = num2 = operator = "";
+    num1 = '0';
+    num2 = operator = "";
     operations = [];
-    displayValue = '0';
+    displayValue = num1 + displayOperator(operator) + num2;
     populateDisplay();
 }
 
 // Numbers Handler
 function numberHandler(e){
     // Until operator is pressed, keep on adding selected numbers to num1
-    if(num1 == "0") num1 = "";
+    const pressedNum = e.target.getAttribute('id');
     if(num1 == "LMAO") {
         operations = [];
-        num1 = num2 = operator = "";
+        num1 = '0'; num2 = operator = "";
     }
-    if(!operator){
-        if(num1 || e.target.getAttribute('id') != '0') {
-            num1 = num1 + e.target.getAttribute('id');
-            operations.push("num1");
-        }
+    if(num1 == '0' && !operator){
+        num1 = "" + pressedNum;
+        if(pressedNum != '0') operations.push('num1');
+    }
+    else if(!operator){
+        num1 = num1 + pressedNum;
+        operations.push("num1");
     }
     // If operator has been recorded, start updaing num2
+    else if(num2 == '0' && pressedNum == '0'){
+        return;
+    }
     else{
-        num2 = num2 + e.target.getAttribute('id');
+        num2 = num2 + pressedNum;
         operations.push("num2");
     }
     displayValue = num1 + displayOperator(operator) + num2;
@@ -254,4 +277,12 @@ window.addEventListener('keydown', (e) => {
     if(pressed == '=' || pressed == 'Enter'){
         document.getElementById('equal').click();
     }
+})
+
+// Debug
+window.addEventListener('click', (e)=>{
+    console.log("nums1:" + num1);
+    console.log("operator:" + operator);
+    console.log("nums2:" + num2);
+    console.log(operations);
 })
