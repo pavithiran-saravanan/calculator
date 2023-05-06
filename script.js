@@ -1,33 +1,30 @@
+let num1 = "", operator = "", num2 = "";
+let displayValue = '0';
 const display = document.querySelector('.display');
+let operations = [];
+const clear = document.querySelector('.clear');
+const dot = document.querySelector('.dot');
+const operators = document.querySelectorAll('.op');
+const equal = document.querySelector('#equal');
+const back = document.querySelector('.back');
 
-// Add
 function add(num1, num2){
     return num1+num2;
 }
 
-// Subtract
 function subtract(num1, num2){
     return num1-num2;
 }
 
-// Multiply
 function multiply(num1, num2){
     return num1*num2;
 }
 
-// Divide
 function divide(num1, num2){
     if(num2 == 0) return "LMAO"
     return num1/num2;
 }
 
-// Variables required for an operation
-let num1 = "", operator = "", num2 = "";
-
-// Variable to store display value
-let displayValue;
-
-// Operate
 function operate(num1, operator, num2){
     if(operator == '+') return add(+num1, +num2);
     if(operator == '-') return subtract(+num1, +num2);
@@ -35,103 +32,17 @@ function operate(num1, operator, num2){
     if(operator == '/') return divide(+num1, +num2);
 }
 
-// Create a function to populate the display when number buttons are clicked
 function populateDisplay(){
     if(!num1) display.textContent = "0";
     else display.textContent = displayValue;
-
-    /* TO DO: ROUND LONG DECIMALS */
 };
 
-// Adding evenlistener to all of the number buttons. On click event listener to populate display.
-const numbers = document.querySelectorAll('.num');
-numbers.forEach((number)=>{
-    number.addEventListener('click', (e)=>{
-        // Until operator is pressed, keep on adding selected numbers to num1
-        if(num1 == "0") num1 = "";
-        if(num1 == "LMAO") {
-            operations = [];
-            num1 = num2 = operator = "";
-        }
-        if(!operator){
-            if(num1 || e.target.getAttribute('id') != '0') {
-                num1 = num1 + e.target.getAttribute('id');
-                operations.push("num1");
-            }
-        }
-        // If operator has been recorded, start updaing num2
-        else{
-            num2 = num2 + e.target.getAttribute('id');
-            operations.push("num2");
-        }
-        // Update displayValue
-        displayValue = num1 + displayOperator(operator) + num2;
-
-        // Populate display
-        populateDisplay(); 
-
-    });
-})
-
-// Adding evetlistener to clear button to reset to default values
-const clear = document.querySelector('.clear');
-clear.addEventListener('click', (e)=>{
-    // Reset our variables
-    num1 = num2 = operator = "";
-    operations = [];
-
-    // Update display after variable refres
-    populateDisplay();
-});
-
+// Changes * to x and / to ÷ when outputting to display
 function displayOperator(op){
     if(op == '*') return "×";
     if(op == '/') return "÷";
     else return op;
 }
-
-// Adding event listener to operators. If num2 is also populated, call operate and display output. Else, simply update operator var and display.
-const operators = document.querySelectorAll('.op');
-operators.forEach((op)=>{
-    op.addEventListener('click', (e)=>{
-        if(isDecimalPresentAtLast()) return;
-        if(num1 == "LMAO") {
-            operations = [];
-            num1 = num2 = operator = "";
-            populateDisplay();
-        }
-        if(num1){
-            // When operator is pressed after num1 is populated
-            if(!num2){
-                operator = e.target.getAttribute('id');
-                displayValue = num1+displayOperator(operator)+num2;
-                populateDisplay();
-                operations.push("operator");
-            }
-            // When operator is pressed after num2
-            else{
-                num1 = "" + operate(num1, operator, num2);
-                if(num1 == "LMAO") {
-                    operations = [];
-                    // num1 = num2 = operator = "";
-                    displayValue = num1;
-                    populateDisplay();
-                    return;
-                }
-                operator = e.target.getAttribute('id');
-                num2 = "";
-                displayValue = num1 + displayOperator(operator);
-                
-                // Resetting operations stack
-                operations = [];
-                for(let i = 0; i < num1.length; i++) operations.push("num1");
-                operations.push("operator");
-
-                populateDisplay();
-            }
-        }
-    })
-}) 
 
 function isDecimalPresentAtLast(){
     if(num1 && num1[num1.length-1] == '.') return true;
@@ -139,59 +50,38 @@ function isDecimalPresentAtLast(){
     else return false;
 }
 
+// Add event listeners to number buttons
+const numbers = document.querySelectorAll('.num');
+numbers.forEach((number)=>{
+    number.addEventListener('click', numberHandler);
+})
+
+// Add event listener to dot button
+dot.addEventListener('click', dotHandler);
+
+// Adding event listeners to operators
+operators.forEach((op)=>{
+    op.addEventListener('click', operatorHandler);
+}) 
+
+// Add event listener to equal button
+equal.addEventListener('click', equalHandler);
+
+// Add event listener to back button
+back.addEventListener('click', backHandler);
+
+// Add event listener to clear button
+clear.addEventListener('click', clearHandler);
+
 // Strip Num
 function strip(number){
     return parseFloat(number).toPrecision(15);
 }
 
-// Equal To Operation
-const equal = document.querySelector('#equal');
-equal.addEventListener('click', (e)=>{
-    if(!isDecimalPresentAtLast() && num1 && operator && num2){
-        // num1 = "" + strip(operate(num1, operator, num2));
-        num1 = "" + operate(num1, operator, num2);
-        operator = "";
-        num2 = "";
-        displayValue = num1;
-        populateDisplay();
-        operations.push('equal');
-    }
-})
 
-const dot = document.querySelector('.dot');
-dot.addEventListener('click', (e)=>{
-    // If num1 == "" dot should be appended to a zero making 0.1
-    if(num1 == "LMAO") {
-        operations = [];
-        num1 = num2 = operator = "";
-        populateDisplay();
-    }
-    if(!num1){
-        num1 = "0.";
-        operations.push('num1');
-    }
-    else if(!operator){
-        if(!num1.includes(".")) num1 = num1 + ".";
-        operations.push('num1');
-    }
-    else if(!num2){
-        num2 = "0.";
-        operations.push('num2');
-    }
-    else{
-        if(!num2.includes(".")) {
-            num2 = num2 + ".";
-            operations.push('num2');
-        }
-    }
-    displayValue = num1 + displayOperator(operator) + num2;
-    populateDisplay();
-})
 
-// Operations
-let operations = [];
-const back = document.querySelector('.back');
-back.addEventListener('click', (e)=>{
+// Back Button Handler
+function backHandler(e){
     if(num1 == "LMAO"){
         num1 = num2 = operator = "";
         displayValue = 0;
@@ -227,10 +117,160 @@ back.addEventListener('click', (e)=>{
     }
     displayValue = num1 + displayOperator(operator) + num2
     populateDisplay();
+}
+
+// Dot Button Handler
+function dotHandler(e){
+    if(num1 == "LMAO") {
+        operations = [];
+        num1 = num2 = operator = "";
+        populateDisplay();
+    }
+    if(!num1){
+        num1 = "0.";
+        operations.push('num1');
+    }
+    else if(!operator){
+        if(!num1.includes(".")) num1 = num1 + ".";
+        operations.push('num1');
+    }
+    else if(!num2){
+        num2 = "0.";
+        operations.push('num2');
+    }
+    else{
+        if(!num2.includes(".")) {
+            num2 = num2 + ".";
+            operations.push('num2');
+        }
+    }
+    displayValue = num1 + displayOperator(operator) + num2;
+    populateDisplay();
+}
+
+// Equal Button Handler
+function equalHandler(e){
+    if(!isDecimalPresentAtLast() && num1 && operator && num2){
+        // num1 = "" + strip(operate(num1, operator, num2));
+        num1 = "" + operate(num1, operator, num2);
+        operator = "";
+        num2 = "";
+        displayValue = num1;
+        populateDisplay();
+        operations.push('equal');
+    }
+}
+
+// Operator Button Handler
+function operatorHandler(e){
+    if(isDecimalPresentAtLast()) return;
+    if(num1 == "LMAO") {
+        operations = [];
+        num1 = num2 = operator = "";
+        populateDisplay();
+    }
+    if(num1){
+        // When operator is pressed after num1 is populated
+        if(!num2){
+            operator = e.target.getAttribute('id');
+            displayValue = num1+displayOperator(operator)+num2;
+            populateDisplay();
+            operations.push("operator");
+        }
+        // When operator is pressed after num2
+        else{
+            num1 = "" + operate(num1, operator, num2);
+            if(num1 == "LMAO") {
+                operations = [];
+                // num1 = num2 = operator = "";
+                displayValue = num1;
+                populateDisplay();
+                return;
+            }
+            operator = e.target.getAttribute('id');
+            num2 = "";
+            displayValue = num1 + displayOperator(operator);
+            
+            // Resetting operations stack
+            operations = [];
+            for(let i = 0; i < num1.length; i++) operations.push("num1");
+            operations.push("operator");
+
+            populateDisplay();
+        }
+    }
+}
+
+// Clear Button Handler
+function clearHandler(e){
+    // Reset our variables
+    num1 = num2 = operator = "";
+    operations = [];
+    // Update display after variable refres
+    populateDisplay();
+}
+
+// Numbers Handler
+function numberHandler(e){
+    // Until operator is pressed, keep on adding selected numbers to num1
+    if(num1 == "0") num1 = "";
+    if(num1 == "LMAO") {
+        operations = [];
+        num1 = num2 = operator = "";
+    }
+    if(!operator){
+        if(num1 || e.target.getAttribute('id') != '0') {
+            num1 = num1 + e.target.getAttribute('id');
+            operations.push("num1");
+        }
+    }
+    // If operator has been recorded, start updaing num2
+    else{
+        num2 = num2 + e.target.getAttribute('id');
+        operations.push("num2");
+    }
+    // Update displayValue
+    displayValue = num1 + displayOperator(operator) + num2;
+
+    // Populate display
+    populateDisplay(); 
+}
+
+window.addEventListener('keydown', (e) => {
+    console.log(e);
+    const pressed = e.key;
+    if(pressed == '0' || (+pressed >= 1 && +pressed <= 9)){
+        document.getElementById(`${pressed}`).click();
+    }
+    if(pressed == '.'){
+        document.getElementById('dot').click();
+    }
+    if(pressed == '+' || pressed == '-' || pressed == '*' || pressed == '/'){
+        document.getElementById(`${pressed}`).click();
+    }
+    if(pressed == 'Backspace'){
+        document.getElementById('back').click();
+    }
+    if(pressed == 'Delete'){
+        document.getElementById('clear').click();
+    }
+    if(pressed == '=' || pressed == 'Enter'){
+        document.getElementById('equal').click();
+    }
 })
 
-window.addEventListener('click', (e)=>{
-    console.log(num1, operator, num2, operations);
-})
+// For Debugging
+// window.addEventListener('click', (e)=>{
+//     console.log(num1, operator, num2, operations);
+// })
 
-// Add keyboard functionality
+// code = Digit1  key = 1
+// code = Period  key = .
+// key = *
+// key = /
+// key = =
+// key = +
+// key = -
+// key = Delete
+// key = Enter
+// key = Backspace
