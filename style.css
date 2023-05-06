@@ -16,10 +16,12 @@
     --eq-hover : rgb(59, 171, 223);
 }
 
-body{
-    height: 100vh;
+.master{
+    height: 100lvh;
     background-color: var(--background);
     display: flex;
+    align-items: center;
+    justify-content: center;
     background-image: url(./test.jpg);
     background-size:cover;
     background-repeat: no-repeat;
@@ -28,7 +30,7 @@ body{
 
 .container{
     width: 400px;
-    margin: auto;
+    /* margin: auto; */
     display: flex;
     flex-direction: column;
     border-radius: 10px;

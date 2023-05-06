@@ -286,3 +286,9 @@ window.addEventListener('click', (e)=>{
     console.log("nums2:" + num2);
     console.log(operations);
 })
+
+$( function() {
+    $( "#draggable" ).draggable({
+        containment: "parent"
+    });
+  } );
