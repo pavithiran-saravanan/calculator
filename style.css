@@ -54,6 +54,11 @@
     font-weight: 400;
     border-radius: 8px;
     background-color: var(--display);
+    cursor: grab;
+}
+
+.display-container:active{
+    cursor: grabbing;
 }
 
 .display{
