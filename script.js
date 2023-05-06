@@ -111,6 +111,13 @@ operators.forEach((op)=>{
             // When operator is pressed after num2
             else{
                 num1 = "" + operate(num1, operator, num2);
+                if(num1 == "LMAO") {
+                    operations = [];
+                    // num1 = num2 = operator = "";
+                    displayValue = num1;
+                    populateDisplay();
+                    return;
+                }
                 operator = e.target.getAttribute('id');
                 num2 = "";
                 displayValue = num1 + displayOperator(operator);
