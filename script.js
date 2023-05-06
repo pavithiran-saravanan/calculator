@@ -192,6 +192,12 @@ dot.addEventListener('click', (e)=>{
 let operations = [];
 const back = document.querySelector('.back');
 back.addEventListener('click', (e)=>{
+    if(num1 == "LMAO"){
+        num1 = num2 = operator = "";
+        displayValue = 0;
+        populateDisplay();
+        return;
+    }
     if(operations.len == 0){
         num1 = num2 = operator = "";
         return;
