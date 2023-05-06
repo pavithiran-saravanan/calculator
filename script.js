@@ -48,19 +48,28 @@ const numbers = document.querySelectorAll('.num');
 numbers.forEach((number)=>{
     number.addEventListener('click', (e)=>{
         // Until operator is pressed, keep on adding selected numbers to num1
-        if(num1 == "LMAO") num1 = "";
+        if(num1 == "LMAO") {
+            operations = [];
+            num1 = num2 = operator = "";
+        }
         if(!operator){
-            if(+num1 || e.target.getAttribute('id') != '0') num1 = num1 + e.target.getAttribute('id');
+            if(+num1 || e.target.getAttribute('id') != '0') {
+                num1 = num1 + e.target.getAttribute('id');
+                operations.push("num1");
+            }
         }
         // If operator has been recorded, start updaing num2
         else{
             num2 = num2 + e.target.getAttribute('id');
+            operations.push("num2");
         }
         // Update displayValue
         displayValue = num1 + displayOperator(operator) + num2;
 
         // Populate display
         populateDisplay(); 
+
+        console.log(operations);
     });
 })
 
@@ -69,6 +78,7 @@ const clear = document.querySelector('.clear');
 clear.addEventListener('click', (e)=>{
     // Reset our variables
     num1 = num2 = operator = "";
+    operations = [];
 
     // Update display after variable refres
     populateDisplay();
@@ -91,16 +101,24 @@ operators.forEach((op)=>{
                 operator = e.target.getAttribute('id');
                 displayValue = num1+displayOperator(operator)+num2;
                 populateDisplay();
+                operations.push("operator");
             }
             // When operator is pressed after num2
             else{
-                num1 = operate(num1, operator, num2);
+                num1 = "" + operate(num1, operator, num2);
                 operator = e.target.getAttribute('id');
                 num2 = "";
                 displayValue = num1 + displayOperator(operator);
+                
+                // Resetting operations stack
+                operations = [];
+                for(let i = 0; i < num1.length; i++) operations.push("num1");
+                operations.push("operator");
+
                 populateDisplay();
             }
         }
+        console.log(operations);
     })
 }) 
 
@@ -114,11 +132,14 @@ function isDecimalPresentAtLast(){
 const equal = document.querySelector('#equal');
 equal.addEventListener('click', (e)=>{
     if(!isDecimalPresentAtLast() && num1 && operator && num2){
-        num1 = operate(num1, operator, num2);
+        num1 = "" + operate(num1, operator, num2);
         operator = "";
         num2 = "";
         displayValue = num1;
         populateDisplay();
+        operations.push('equal');
+
+        console.log(operations);
     }
 })
 
@@ -140,3 +161,35 @@ dot.addEventListener('click', (e)=>{
     displayValue = num1 + operator + num2;
     populateDisplay();
 })
+
+// Operations
+let operations = [];
+const back = document.querySelector('.back');
+back.addEventListener('click', (e)=>{
+    if(operations.len == 0) return;
+    let lastOperation = operations[operations.length - 1];
+    if(lastOperation == 'equal'){
+        operations = [];
+        operator = num2 = '';
+        for(let i = 0; i < num1.length; i++){
+            operations.push("num1");
+        }
+        lastOperation = 'num1';
+    }
+    if(lastOperation == 'num1'){
+        num1 = num1.substring(0, num1.length - 1);
+    }
+    else if(lastOperation == 'num2'){
+        num2 = num2.substring(0, num2.length - 1);
+    }
+    else if(lastOperation == 'operator'){
+        operator = "";
+    }
+    operations.pop();
+    displayValue = num1 + operator + num2;
+    console.log(operations);
+    populateDisplay();
+})
+
+
+// Add keyboard functionality
