@@ -53,7 +53,7 @@ numbers.forEach((number)=>{
             operations = [];
             num1 = num2 = operator = "";
         }
-        else if(!operator){
+        if(!operator){
             if(num1 || e.target.getAttribute('id') != '0') {
                 num1 = num1 + e.target.getAttribute('id');
                 operations.push("num1");
@@ -95,6 +95,11 @@ const operators = document.querySelectorAll('.op');
 operators.forEach((op)=>{
     op.addEventListener('click', (e)=>{
         if(isDecimalPresentAtLast()) return;
+        if(num1 == "LMAO") {
+            operations = [];
+            num1 = num2 = operator = "";
+            populateDisplay();
+        }
         if(num1){
             // When operator is pressed after num1 is populated
             if(!num2){
@@ -127,23 +132,33 @@ function isDecimalPresentAtLast(){
     else return false;
 }
 
+// Strip Num
+function strip(number){
+    return parseFloat(number).toPrecision(15);
+}
+
 // Equal To Operation
 const equal = document.querySelector('#equal');
 equal.addEventListener('click', (e)=>{
     if(!isDecimalPresentAtLast() && num1 && operator && num2){
+        // num1 = "" + strip(operate(num1, operator, num2));
         num1 = "" + operate(num1, operator, num2);
         operator = "";
         num2 = "";
         displayValue = num1;
         populateDisplay();
         operations.push('equal');
-
     }
 })
 
 const dot = document.querySelector('.dot');
 dot.addEventListener('click', (e)=>{
     // If num1 == "" dot should be appended to a zero making 0.1
+    if(num1 == "LMAO") {
+        operations = [];
+        num1 = num2 = operator = "";
+        populateDisplay();
+    }
     if(!num1){
         num1 = "0.";
         operations.push('num1');
@@ -162,7 +177,7 @@ dot.addEventListener('click', (e)=>{
             operations.push('num2');
         }
     }
-    displayValue = num1 + operator + num2;
+    displayValue = num1 + displayOperator(operator) + num2;
     populateDisplay();
 })
 
@@ -170,7 +185,10 @@ dot.addEventListener('click', (e)=>{
 let operations = [];
 const back = document.querySelector('.back');
 back.addEventListener('click', (e)=>{
-    if(operations.len == 0) return;
+    if(operations.len == 0){
+        num1 = num2 = operator = "";
+        return;
+    }
     let lastOperation = operations[operations.length - 1];
     if(lastOperation == 'equal'){
         operations = [];
@@ -184,15 +202,22 @@ back.addEventListener('click', (e)=>{
         num1 = num1.substring(0, num1.length - 1);
     }
     else if(lastOperation == 'num2'){
-        num2 = num2.substring(0, num2.length - 1);
+        if(num2) num2 = num2.substring(0, num2.length - 1);
+        else num2 = "";
     }
     else if(lastOperation == 'operator'){
         operator = "";
     }
     operations.pop();
-    displayValue = num1 + operator + num2
+    if(operations.leng == 0){
+        num1 = num2 = operator = "";
+    }
+    displayValue = num1 + displayOperator(operator) + num2
     populateDisplay();
 })
 
+window.addEventListener('click', (e)=>{
+    console.log(num1, operator, num2, operations);
+})
 
 // Add keyboard functionality
