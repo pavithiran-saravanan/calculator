@@ -288,7 +288,10 @@ window.addEventListener('click', (e)=>{
 })
 
 $( function() {
-    $( "#draggable" ).draggable({
+    $( ".draggable" ).draggable({
         containment: "parent"
     });
   } );
+
+  
+  
