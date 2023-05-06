@@ -48,12 +48,13 @@ const numbers = document.querySelectorAll('.num');
 numbers.forEach((number)=>{
     number.addEventListener('click', (e)=>{
         // Until operator is pressed, keep on adding selected numbers to num1
+        if(num1 == "0") num1 = "";
         if(num1 == "LMAO") {
             operations = [];
             num1 = num2 = operator = "";
         }
-        if(!operator){
-            if(+num1 || e.target.getAttribute('id') != '0') {
+        else if(!operator){
+            if(num1 || e.target.getAttribute('id') != '0') {
                 num1 = num1 + e.target.getAttribute('id');
                 operations.push("num1");
             }
@@ -69,7 +70,6 @@ numbers.forEach((number)=>{
         // Populate display
         populateDisplay(); 
 
-        console.log(operations);
     });
 })
 
@@ -118,7 +118,6 @@ operators.forEach((op)=>{
                 populateDisplay();
             }
         }
-        console.log(operations);
     })
 }) 
 
@@ -139,7 +138,6 @@ equal.addEventListener('click', (e)=>{
         populateDisplay();
         operations.push('equal');
 
-        console.log(operations);
     }
 })
 
@@ -148,15 +146,21 @@ dot.addEventListener('click', (e)=>{
     // If num1 == "" dot should be appended to a zero making 0.1
     if(!num1){
         num1 = "0.";
+        operations.push('num1');
     }
     else if(!operator){
         if(!num1.includes(".")) num1 = num1 + ".";
+        operations.push('num1');
     }
     else if(!num2){
         num2 = "0.";
+        operations.push('num2');
     }
     else{
-        if(!num2.includes(".")) num2 = num2 + ".";
+        if(!num2.includes(".")) {
+            num2 = num2 + ".";
+            operations.push('num2');
+        }
     }
     displayValue = num1 + operator + num2;
     populateDisplay();
@@ -186,8 +190,7 @@ back.addEventListener('click', (e)=>{
         operator = "";
     }
     operations.pop();
-    displayValue = num1 + operator + num2;
-    console.log(operations);
+    displayValue = num1 + operator + num2
     populateDisplay();
 })
 
