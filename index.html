@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
 
     <!-- Poppins from google fonts -->
@@ -20,39 +20,39 @@
     <i class="fa-solid fa-delete-left" style="color: #ffffff;"></i>
     <div class="container">
         <!-- <div class="tab">Calculator</div> -->
-        <div class="display">11</div>
+        <div class="display-container"><div class="display">0</div></div>
         <div class="buttons-container">
             <div class="row">
-                <div class="btn op plus">+</div>
-                <div class="btn op minus">-</div>
-                <div class="btn others clear">CL</div>
+                <div class="btn op plus" id="+" >+</div>
+                <div class="btn op minus" id="-">-</div>
+                <div class="btn others clear" id="clear">CL</div>
             </div>
             <div class="row">
-                <div class="btn op multiply">×</div>
-                <div class="btn op divide">÷</div>
-                <div class="btn others back">
+                <div class="btn op multiply" id="*">×</div>
+                <div class="btn op divide" id="/">÷</div>
+                <div class="btn others back" id="back">
                     <span class="material-symbols-rounded" id="backspace-icon">backspace</span>
                 </div>
             </div>
             <div class="row">
-                <div class="btn num">7</div>
-                <div class="btn num">8</div>
-                <div class="btn num">9</div>
+                <div class="btn num" id="7">7</div>
+                <div class="btn num" id="8">8</div>
+                <div class="btn num" id="9">9</div>
             </div>
             <div class="row">
-                <div class="btn num">4</div>
-                <div class="btn num">5</div>
-                <div class="btn num">6</div>
+                <div class="btn num" id="4">4</div>
+                <div class="btn num" id="5">5</div>
+                <div class="btn num" id="6">6</div>
             </div>
             <div class="row">
-                <div class="btn num">1</div>
-                <div class="btn num">2</div>
-                <div class="btn num">3</div>
+                <div class="btn num" id="1">1</div>
+                <div class="btn num" id="2">2</div>
+                <div class="btn num" id="3">3</div>
             </div>
             <div class="row">
-                <div class="btn num">0</div>
-                <div class="btn num dot">.</div>
-                <div class="btn eq">=</div>
+                <div class="btn num" id="0">0</div>
+                <div class="btn dot" id="dot">.</div>
+                <div class="btn eq" id="equal">=</div>
             </div>
         </div>
     </div>

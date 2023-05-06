@@ -41,16 +41,23 @@ body{
     backdrop-filter: blur(50px);
 }
 
-.display{
+.display-container{
     display: flex;
-    padding-right: 20px;
-    height: 140px;
     justify-content: end;
-    font-size: 80px;
-    font-weight: 400;
     align-items: center;
+
+    padding: 0px 20px;
+    min-height: 140px;
+    font-size: 80px;
+    font-size: 50px;
+    font-weight: 400;
     border-radius: 8px;
     background-color: var(--display);
+}
+
+.display{
+    word-break: break-all;
+    line-height: 110%;
 }
 
 .buttons-container{
