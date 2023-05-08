@@ -182,7 +182,7 @@ a, a::after{
     }
 }
 
-@media screen and (max-height: 400px){
+@media screen and (max-height: 500px){
     .container{
         width: 95%;
         height: 100%;
