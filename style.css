@@ -190,6 +190,7 @@ a, a::after{
     }
     .buttons-container{
         max-height: 70%;
+        font-size: 15px;
     }
     .display-container{
         flex: 1;
@@ -205,5 +206,17 @@ a, a::after{
     }
     .op-row{
         max-height: 65px;
+    }
+    .display-container{
+        min-height: 50px;
+        /* font-size: 10px; */
+    }
+    .op, .others{
+        /* background-color: var(--op); */
+        background-color: rgba(150, 150, 255, 6%);
+        font-size: 18px;
+    }
+    #backspace-icon{
+        font-size: 20px;
     }
 }
