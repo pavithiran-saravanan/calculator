@@ -27,10 +27,10 @@ function divide(num1, num2){
 }
 
 function operate(num1, operator, num2){
-    if(operator == '+') return add(+num1, +num2);
-    if(operator == '-') return subtract(+num1, +num2);
-    if(operator == '*') return multiply(+num1, +num2);
-    if(operator == '/') return divide(+num1, +num2);
+    if(operator == '+') return parseFloat(add(+num1, +num2).toFixed(10));
+    if(operator == '-') return parseFloat(subtract(+num1, +num2).toFixed(10));
+    if(operator == '*') return parseFloat(multiply(+num1, +num2).toFixed(10));
+    if(operator == '/') return parseFloat(divide(+num1, +num2).toFixed(10));
 }
 
 function populateDisplay(){
