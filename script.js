@@ -34,8 +34,12 @@ function operate(num1, operator, num2){
 }
 
 function populateDisplay(){
-    if(displayValue.length > 15) display.style.fontSize = '25px';
-    else if(displayValue.length > 13) display.style.fontSize = '30px';
+    if(num1.length > 32 || num2.length > 32){
+        displayValue = num1 = 'MATH ERROR'; num2 = operator = '';
+        populateDisplay();
+        return;
+    }
+    if(displayValue.length > 13) display.style.fontSize = '30px';
     else if(displayValue.length > 10) display.style.fontSize = '36px';
     else if(displayValue.length > 7) display.style.fontSize = '45px';
     else display.style.fontSize = '60px';
@@ -60,25 +64,25 @@ function isDecimalPresentAtLast(){
 // Add event listeners to number buttons
 const numbers = document.querySelectorAll('.num');
 numbers.forEach((number)=>{
-    number.addEventListener('mousedown', numberHandler);
+    number.addEventListener('click', numberHandler);
 })
 
 // Add event listener to dot button
-dot.addEventListener('mousedown', dotHandler);
+dot.addEventListener('click', dotHandler);
 
 // Adding event listeners to operators
 operators.forEach((op)=>{
-    op.addEventListener('mousedown', operatorHandler);
+    op.addEventListener('click', operatorHandler);
 }) 
 
 // Add event listener to equal button
-equal.addEventListener('mousedown', equalHandler);
+equal.addEventListener('click', equalHandler);
 
 // Add event listener to back button
-back.addEventListener('mousedown', backHandler);
+back.addEventListener('click', backHandler);
 
 // Add event listener to clear button
-clear.addEventListener('mousedown', clearHandler);
+clear.addEventListener('click', clearHandler);
 
 // Strip Num
 function strip(number){
@@ -89,7 +93,7 @@ function strip(number){
 function backHandler(e){
     let lastOperation = operations[operations.length - 1];
 
-    if(num1 == "LMAO"){
+    if(num1 == "LMAO" || num1 == "MATH ERROR"){
         num1 = '0'; num2 = operator = "";
         displayValue = num1 + displayOperator(operator) + num2;
         populateDisplay();
@@ -132,7 +136,7 @@ function backHandler(e){
 
 // Dot Button Handler
 function dotHandler(e){
-    if(num1 == "LMAO") {
+    if(num1 == "LMAO" || num1 == "MATH ERROR") {
         operations = [];
         num1 = '0';
         num2 = operator = "";
@@ -180,7 +184,7 @@ function equalHandler(e){
 function operatorHandler(e){
     const operatorPressed = e.target.getAttribute('id');
     if(isDecimalPresentAtLast()) return;
-    // if(num1 == "LMAO") {
+    // if(num1 == "LMAO" || num1 == "MATH ERROR") {
     //     console.log('MY LMAO');
     //     operations = [];
     //     num1 = '0';
@@ -205,7 +209,7 @@ function operatorHandler(e){
         // When operator is pressed after num2
         else{
             num1 = "" + operate(num1, operator, num2);
-            if(num1 == "LMAO") {
+            if(num1 == "LMAO" || num1 == "MATH ERROR") {
                 operations = [];
                 operator = num2 = '';
                 displayValue = num1 + displayOperator(operator) + num2;
@@ -235,7 +239,7 @@ function clearHandler(e){
 function numberHandler(e){
     // Until operator is pressed, keep on adding selected numbers to num1
     const pressedNum = e.target.getAttribute('id');
-    if(num1 == "LMAO") {
+    if(num1 == "LMAO" || num1 == "MATH ERROR") {
         operations = [];
         num1 = '0'; num2 = operator = "";
     }

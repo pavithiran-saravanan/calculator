@@ -171,7 +171,8 @@ a, a::after{
     }
     .master{
         background-image: none;
-        background-color: rgb(33, 95, 196);
+        /* background-color: rgb(33, 95, 196); */
+        background-color: rgb(28, 28, 28);
     }
     .footer{
         display: none;
