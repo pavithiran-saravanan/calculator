@@ -58,35 +58,25 @@ function isDecimalPresentAtLast(){
 // Add event listeners to number buttons
 const numbers = document.querySelectorAll('.num');
 numbers.forEach((number)=>{
-    number.addEventListener('click', numberHandler);
-})
-numbers.forEach((number)=>{
-    number.addEventListener('touchstart', numberHandler);
+    number.addEventListener('mousedown', numberHandler);
 })
 
 // Add event listener to dot button
-dot.addEventListener('click', dotHandler);
-dot.addEventListener('touchstart', dotHandler);
+dot.addEventListener('mousedown', dotHandler);
 
 // Adding event listeners to operators
 operators.forEach((op)=>{
-    op.addEventListener('click', operatorHandler);
-}) 
-operators.forEach((op)=>{
-    op.addEventListener('touchstart', operatorHandler);
+    op.addEventListener('mousedown', operatorHandler);
 }) 
 
 // Add event listener to equal button
-equal.addEventListener('click', equalHandler);
-equal.addEventListener('touchstart', equalHandler);
+equal.addEventListener('mousedown', equalHandler);
 
 // Add event listener to back button
-back.addEventListener('click', backHandler);
-back.addEventListener('touchstart', backHandler);
+back.addEventListener('mousedown', backHandler);
 
 // Add event listener to clear button
-clear.addEventListener('click', clearHandler);
-clear.addEventListener('touchstart', clearHandler);
+clear.addEventListener('mousedown', clearHandler);
 
 // Strip Num
 function strip(number){
