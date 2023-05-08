@@ -181,3 +181,29 @@ a, a::after{
         max-height: 65px;
     }
 }
+
+@media screen and (max-height: 400px){
+    .container{
+        width: 95%;
+        height: 100%;
+        border-radius: 0;
+    }
+    .buttons-container{
+        max-height: 70%;
+    }
+    .display-container{
+        flex: 1;
+        align-items: flex-end;
+    }
+    .master{
+        background-image: none;
+        /* background-color: rgb(33, 95, 196); */
+        background-color: rgb(28, 28, 28);
+    }
+    .footer{
+        display: none;
+    }
+    .op-row{
+        max-height: 65px;
+    }
+}
