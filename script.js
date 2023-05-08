@@ -34,9 +34,11 @@ function operate(num1, operator, num2){
 }
 
 function populateDisplay(){
-    if(displayValue.length > 14) display.style.fontSize = '30px';
-    else if(displayValue.length > 9) display.style.fontSize = '40px';
-    else if(displayValue.length <= 9) display.style.fontSize = '60px';
+    if(displayValue.length > 15) display.style.fontSize = '25px';
+    else if(displayValue.length > 13) display.style.fontSize = '30px';
+    else if(displayValue.length > 10) display.style.fontSize = '36px';
+    else if(displayValue.length > 7) display.style.fontSize = '45px';
+    else display.style.fontSize = '60px';
 
     if(num1 == '') display.textContent = '0';
     display.textContent = displayValue;
