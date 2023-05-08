@@ -60,23 +60,33 @@ const numbers = document.querySelectorAll('.num');
 numbers.forEach((number)=>{
     number.addEventListener('click', numberHandler);
 })
+numbers.forEach((number)=>{
+    number.addEventListener('touchstart', numberHandler);
+})
 
 // Add event listener to dot button
 dot.addEventListener('click', dotHandler);
+dot.addEventListener('touchstart', dotHandler);
 
 // Adding event listeners to operators
 operators.forEach((op)=>{
     op.addEventListener('click', operatorHandler);
 }) 
+operators.forEach((op)=>{
+    op.addEventListener('touchstart', operatorHandler);
+}) 
 
 // Add event listener to equal button
 equal.addEventListener('click', equalHandler);
+equal.addEventListener('touchstart', equalHandler);
 
 // Add event listener to back button
 back.addEventListener('click', backHandler);
+back.addEventListener('touchstart', backHandler);
 
 // Add event listener to clear button
 clear.addEventListener('click', clearHandler);
+clear.addEventListener('touchstart', clearHandler);
 
 // Strip Num
 function strip(number){
@@ -257,7 +267,7 @@ function numberHandler(e){
     populateDisplay(); 
 }
 
-window.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', (e) => {
     const pressed = e.key;
     if(pressed == '0' || (+pressed >= 1 && +pressed <= 9)){
         document.getElementById(`${pressed}`).click();
@@ -280,12 +290,12 @@ window.addEventListener('keydown', (e) => {
 })
 
 // Debug
-window.addEventListener('click', (e)=>{
-    console.log("nums1:" + num1);
-    console.log("operator:" + operator);
-    console.log("nums2:" + num2);
-    console.log(operations);
-})
+// document.addEventListener('click', (e)=>{
+//     console.log("nums1:" + num1);
+//     console.log("operator:" + operator);
+//     console.log("nums2:" + num2);
+//     console.log(operations);
+// })
 
 $( function() {
     $( ".draggable" ).draggable({
