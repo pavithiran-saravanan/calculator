@@ -11,7 +11,7 @@ Check out the live demo of the project here https://pavithiran-saravanan.github.
 - JQuery
 
 # Features
-- Supports all arithmetic operations and decimals
+- Supports basic arithmetic operations and decimals
 - Calculator window is draggable across the screen
 - Has an elegant frosted glass design
 - Optimized fullscreen view on mobile displays
